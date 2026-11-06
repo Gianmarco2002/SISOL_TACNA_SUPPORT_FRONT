@@ -25,16 +25,9 @@
         <div class="flex flex-col gap-2">
           <h2 class="text-xl font-bold">Inicia sesión</h2>
 
-          <div>
-            <span>¿No tienes cuenta? </span>
-            <button
-              type="button"
-              class="text-primary cursor-pointer font-medium hover:underline"
-              (click)="isLoginSection.set(false)"
-            >
-              <span>Crear cuenta</span>
-            </button>
-          </div>
+          <p class="text-muted-foreground">
+            ¿No tienes cuenta? Pídela al área de sistemas.
+          </p>
         </div>
 
         <form class="w-full" (submit)="login($event)">
