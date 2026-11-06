@@ -24,7 +24,9 @@ export default class ChangePassword {
   current = signal('');
   password = signal('');
   confirm = signal('');
-  hide = signal(true);
+  hideCurrent = signal(true);
+  hideNew = signal(true);
+  hideConfirm = signal(true);
   saving = signal(false);
   touched = signal(false);
 
