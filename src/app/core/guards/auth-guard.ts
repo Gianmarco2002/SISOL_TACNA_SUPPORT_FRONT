@@ -20,11 +20,21 @@ export const authGuard: CanActivateFn = (_route, state) => {
     return false;
   }
 
-  return authService.verifySession().pipe(
-    map((status: boolean) => {
-      if (!status) {
+  return authService.sessionInfo().pipe(
+    map(({ ok, mustChange }) => {
+      if (!ok) {
         sessionStorage.setItem('auth_return_url', state.url);
         router.navigate(['']);
+        return false;
+      }
+      const enCambioClave = state.url.startsWith('/cambiar-clave');
+      // Tras un restablecimiento, primero debe crear una contraseña nueva
+      if (mustChange && !enCambioClave) {
+        router.navigate(['/cambiar-clave']);
+        return false;
+      }
+      if (!mustChange && enCambioClave) {
+        router.navigate(['/panel']);
         return false;
       }
       return true;

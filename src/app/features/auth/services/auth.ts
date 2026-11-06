@@ -65,4 +65,20 @@ export class AuthService {
       finalize(() => this.loading.set(false)),
     );
   }
+
+  // Igual que verifySession, pero indica si el usuario debe cambiar su contraseña
+  sessionInfo() {
+    return this.http
+      .get<{ success: boolean; must_change_password?: boolean }>(`${this.baseUrl}/verify-session`)
+      .pipe(
+        map((r) => ({ ok: true, mustChange: r?.must_change_password === true })),
+        catchError((_: HttpErrorResponse) => of({ ok: false, mustChange: false })),
+      );
+  }
+
+  changeOwnPassword(newPassword: string) {
+    return this.http.patch<{ success: boolean }>(`${this.baseUrl}/me/password`, {
+      new_password: newPassword,
+    });
+  }
 }

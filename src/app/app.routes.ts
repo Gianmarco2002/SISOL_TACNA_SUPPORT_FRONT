@@ -15,6 +15,12 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: 'cambiar-clave',
+    loadComponent: () => import('./features/auth/change-password/change-password'),
+    canActivate: [authGuard],
+    title: 'Crea tu nueva contraseña',
+  },
+  {
     path: 'admin',
     loadChildren: () => import('./features/admin/admin.routes'),
     canActivate: [authGuard],
