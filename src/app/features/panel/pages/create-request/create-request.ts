@@ -117,6 +117,7 @@ export default class CreateRequest implements OnInit, OnDestroy {
       if (requestType === null) return true;
 
       return requestType.code === 'TICKET_RELEASE_LT30' ||
+        requestType.code === 'TICKET_IN_PROCESS' ||
         requestType.code === 'TICKET_UNLOCK_GT30' ||
         requestType.code === 'CREDIT_NOTE_CREATE' ||
         requestType.code === 'CREDIT_NOTE_REVERT' ||
@@ -134,6 +135,7 @@ export default class CreateRequest implements OnInit, OnDestroy {
 
       const isVoucherAction =
         requestType.code === 'TICKET_RELEASE_LT30' ||
+        requestType.code === 'TICKET_IN_PROCESS' ||
         requestType.code === 'TICKET_UNLOCK_GT30' ||
         requestType.code === 'CREDIT_NOTE_CREATE' ||
         requestType.code === 'CREDIT_NOTE_REVERT';
@@ -152,6 +154,7 @@ export default class CreateRequest implements OnInit, OnDestroy {
       if (requestType === null) return true;
 
       return requestType.code === 'TICKET_RELEASE_LT30' ||
+        requestType.code === 'TICKET_IN_PROCESS' ||
         requestType.code === 'TICKET_UNLOCK_GT30' ||
         requestType.code === 'CREDIT_NOTE_CREATE' ||
         requestType.code === 'CREDIT_NOTE_REVERT'
@@ -165,6 +168,7 @@ export default class CreateRequest implements OnInit, OnDestroy {
       if (requestType === null) return true;
 
       return requestType.code === 'TICKET_RELEASE_LT30' ||
+        requestType.code === 'TICKET_IN_PROCESS' ||
         requestType.code === 'TICKET_UNLOCK_GT30' ||
         requestType.code === 'CREDIT_NOTE_CREATE' ||
         requestType.code === 'CREDIT_NOTE_REVERT'
@@ -325,6 +329,7 @@ export default class CreateRequest implements OnInit, OnDestroy {
     return (
       code !== undefined &&
       code !== 'TICKET_RELEASE_LT30' &&
+      code !== 'TICKET_IN_PROCESS' &&
       code !== 'TICKET_UNLOCK_GT30' &&
       code !== 'CREDIT_NOTE_CREATE' &&
       code !== 'CREDIT_NOTE_REVERT' &&
@@ -433,6 +438,7 @@ export default class CreateRequest implements OnInit, OnDestroy {
         });
       } else if (
         codeRequest === 'TICKET_RELEASE_LT30' ||
+        codeRequest === 'TICKET_IN_PROCESS' ||
         codeRequest === 'TICKET_UNLOCK_GT30' ||
         codeRequest === 'CREDIT_NOTE_CREATE' ||
         codeRequest === 'CREDIT_NOTE_REVERT'

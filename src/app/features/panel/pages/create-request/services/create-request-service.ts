@@ -181,6 +181,8 @@ export class CreateRequestService {
     switch (code) {
       case 'TICKET_RELEASE_LT30':
         return 'LIB_30';
+      case 'TICKET_IN_PROCESS':
+        return 'EN_PROC';
       case 'TICKET_UNLOCK_GT30':
         return 'DESB_30';
       case 'CREDIT_NOTE_CREATE':

@@ -61,6 +61,7 @@
         @if (
           codeRequest !== '' &&
           codeRequest !== 'TICKET_RELEASE_LT30' &&
+          codeRequest !== 'TICKET_IN_PROCESS' &&
           codeRequest !== 'TICKET_UNLOCK_GT30' &&
           codeRequest !== 'CREDIT_NOTE_CREATE' &&
           codeRequest !== 'CREDIT_NOTE_REVERT' &&
@@ -287,6 +288,7 @@
               </div>
             } @else if (
               codeRequest === 'TICKET_RELEASE_LT30' ||
+              codeRequest === 'TICKET_IN_PROCESS' ||
               codeRequest === 'TICKET_UNLOCK_GT30' ||
               codeRequest === 'CREDIT_NOTE_CREATE' ||
               codeRequest === 'CREDIT_NOTE_REVERT'
@@ -645,6 +647,8 @@
                   <span class="text-base font-medium" [style.color]="'var(--mat-sys-on-surface)'">
                     @if (codeRequest === 'TICKET_RELEASE_LT30') {
                       Crear otra liberación después
+                    } @else if (codeRequest === 'TICKET_IN_PROCESS') {
+                      Crear otra solicitud de ticket en proceso después
                     } @else if (codeRequest === 'TICKET_UNLOCK_GT30') {
                       Crear otro desbloqueo después
                     } @else if (codeRequest === 'CREDIT_NOTE_CREATE') {
@@ -659,6 +663,7 @@
                   </span>
                   @if (
                     codeRequest !== 'TICKET_RELEASE_LT30' &&
+                    codeRequest !== 'TICKET_IN_PROCESS' &&
                     codeRequest !== 'TICKET_UNLOCK_GT30' &&
                     codeRequest !== 'CREDIT_NOTE_CREATE' &&
                     codeRequest !== 'CREDIT_NOTE_REVERT' &&
