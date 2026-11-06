@@ -210,6 +210,10 @@ export default class AdminBoard implements OnInit {
     });
   }
 
+  goToUsers() {
+    this.router.navigate(['/admin/usuarios']);
+  }
+
   logout() {
     localStorage.removeItem('admin_key');
     this.adminSseService.disconnect();

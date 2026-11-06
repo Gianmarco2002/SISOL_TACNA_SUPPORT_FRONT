@@ -14,6 +14,12 @@ const ADMIN_ROUTES: Routes = [
     title: 'Panel admin',
   },
   {
+    path: 'usuarios',
+    loadComponent: () => import('./pages/admin-users/admin-users'),
+    canActivate: [adminGuard],
+    title: 'Usuarios',
+  },
+  {
     path: 'ticket/:id',
     loadComponent: () => import('./pages/admin-ticket-detail/admin-ticket-detail'),
     canActivate: [adminGuard],

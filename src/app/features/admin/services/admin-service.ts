@@ -4,6 +4,16 @@ import { AdminTicket } from '../models/admin-ticket.model';
 import { TicketComment } from '../../../core/models/ticket-comment.model';
 import { environment } from '../../../../environments/environment';
 
+export interface AdminUser {
+  id: number;
+  username: string;
+  email: string | null;
+  is_active: boolean;
+  must_change_password: boolean;
+  createdAt: string;
+  ticket_count: number;
+}
+
 @Injectable({ providedIn: 'root' })
 export class AdminService {
   private readonly http = inject(HttpClient);
@@ -70,5 +80,33 @@ export class AdminService {
       {},
       { headers: this.adminHeaders() },
     );
+  }
+
+  getAllUsers() {
+    return this.http.get<AdminUser[]>(`${this.baseUrl}/user/admin/all`, {
+      headers: this.adminHeaders(),
+    });
+  }
+
+  resetUserPassword(id: number) {
+    return this.http.patch<{ username: string; password: string }>(
+      `${this.baseUrl}/user/admin/${id}/reset`,
+      {},
+      { headers: this.adminHeaders() },
+    );
+  }
+
+  setUserActive(id: number, isActive: boolean) {
+    return this.http.patch<{ id: number; is_active: boolean }>(
+      `${this.baseUrl}/user/admin/${id}/active`,
+      { is_active: isActive },
+      { headers: this.adminHeaders() },
+    );
+  }
+
+  deleteUser(id: number) {
+    return this.http.delete<{ id: number }>(`${this.baseUrl}/user/admin/${id}`, {
+      headers: this.adminHeaders(),
+    });
   }
 }

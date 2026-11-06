@@ -1,0 +1,120 @@
+<div class="users-shell">
+  <header class="users-header">
+    <div class="users-header-left">
+      <button mat-icon-button (click)="back()" title="Volver al tablero">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <mat-icon class="header-icon">group</mat-icon>
+      <span class="users-title">Usuarios</span>
+      @if (!loading() && !error()) {
+        <span class="users-count">{{ users().length }} en total · {{ activeCount() }} activos</span>
+      }
+    </div>
+    <div class="users-header-right">
+      <button mat-icon-button (click)="load()" [disabled]="loading()" title="Recargar">
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </div>
+  </header>
+
+  <main class="users-main">
+    @if (resetResult(); as res) {
+      <div class="reset-banner" role="status">
+        <mat-icon>key</mat-icon>
+        <div class="reset-text">
+          <strong>Contraseña restablecida para {{ res.username }}.</strong>
+          <span>
+            Su nueva contraseña temporal es <code>{{ res.password }}</code>. Pásasela por un
+            medio privado.
+          </span>
+        </div>
+        <button mat-button (click)="copyPassword()">Copiar</button>
+        <button mat-icon-button (click)="resetResult.set(null)" title="Cerrar">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    }
+
+    <div class="search-box">
+      <mat-icon>search</mat-icon>
+      <input
+        type="search"
+        placeholder="Buscar por usuario o correo"
+        [value]="query()"
+        (input)="onSearch($event)"
+        aria-label="Buscar usuario"
+      />
+    </div>
+
+    @if (loading()) {
+      <div class="state-box">
+        <mat-spinner diameter="40" />
+        <p>Cargando usuarios...</p>
+      </div>
+    } @else if (error()) {
+      <div class="state-box">
+        <mat-icon>error_outline</mat-icon>
+        <p>No se pudieron cargar los usuarios.</p>
+        <button mat-flat-button (click)="load()">Reintentar</button>
+      </div>
+    } @else if (filtered().length === 0) {
+      <div class="state-box">
+        <mat-icon>person_search</mat-icon>
+        <p>{{ query() ? 'Ningún usuario coincide con la búsqueda.' : 'Todavía no hay usuarios.' }}</p>
+      </div>
+    } @else {
+      <div class="table-wrap">
+        <table class="users-table">
+          <thead>
+            <tr>
+              <th>Usuario</th>
+              <th>Correo</th>
+              <th class="num">Solicitudes</th>
+              <th>Registrado</th>
+              <th>Estado</th>
+              <th class="actions-col"><span class="sr-only">Acciones</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (u of filtered(); track u.id) {
+              <tr [class.inactive]="!u.is_active">
+                <td class="username" data-label="Usuario">{{ u.username }}</td>
+                <td data-label="Correo">{{ u.email || '—' }}</td>
+                <td class="num" data-label="Solicitudes">{{ u.ticket_count }}</td>
+                <td data-label="Registrado">{{ u.createdAt | date: 'dd/MM/yyyy' }}</td>
+                <td data-label="Estado">
+                  <span class="badge" [class.badge--off]="!u.is_active">
+                    {{ u.is_active ? 'Activo' : 'Desactivado' }}
+                  </span>
+                </td>
+                <td class="actions-col">
+                  @if (busyId() === u.id) {
+                    <mat-spinner diameter="22" />
+                  } @else {
+                    <button mat-icon-button [matMenuTriggerFor]="menu" [attr.aria-label]="'Acciones para ' + u.username">
+                      <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                      <button mat-menu-item (click)="resetPassword(u)">
+                        <mat-icon>lock_reset</mat-icon>
+                        <span>Restablecer contraseña</span>
+                      </button>
+                      <button mat-menu-item (click)="toggleActive(u)">
+                        <mat-icon>{{ u.is_active ? 'block' : 'check_circle' }}</mat-icon>
+                        <span>{{ u.is_active ? 'Desactivar cuenta' : 'Activar cuenta' }}</span>
+                      </button>
+                      <button mat-menu-item class="danger" (click)="deleteUser(u)">
+                        <mat-icon>delete</mat-icon>
+                        <span>Eliminar cuenta</span>
+                      </button>
+                    </mat-menu>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </main>
+</div>

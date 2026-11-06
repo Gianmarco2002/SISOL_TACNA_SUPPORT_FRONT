@@ -1,0 +1,258 @@
+.users-shell {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--mat-sys-surface-container-low);
+  color: var(--mat-sys-on-surface);
+}
+
+.users-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background: var(--mat-sys-surface);
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.users-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+.header-icon {
+  color: var(--mat-sys-primary);
+}
+
+.users-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.users-count {
+  font-size: 0.85rem;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.users-main {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.25rem 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.reset-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  background: var(--mat-sys-primary-container);
+  color: var(--mat-sys-on-primary-container);
+}
+
+.reset-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-size: 0.9rem;
+}
+
+.reset-text code {
+  font-family: ui-monospace, monospace;
+  font-weight: 700;
+  padding: 0 0.3rem;
+  border-radius: 4px;
+  background: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 0.85rem;
+  height: 44px;
+  border-radius: 22px;
+  background: var(--mat-sys-surface);
+  border: 1px solid var(--mat-sys-outline-variant);
+  max-width: 420px;
+}
+
+.search-box mat-icon {
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.search-box input {
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+}
+
+.state-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 3rem 1rem;
+  color: var(--mat-sys-on-surface-variant);
+  text-align: center;
+}
+
+.table-wrap {
+  background: var(--mat-sys-surface);
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.users-table th {
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: var(--mat-sys-on-surface-variant);
+  padding: 0.7rem 0.9rem;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+}
+
+.users-table td {
+  padding: 0.55rem 0.9rem;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+  vertical-align: middle;
+}
+
+.users-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.users-table tr.inactive td {
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.username {
+  font-weight: 600;
+}
+
+.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.actions-col {
+  width: 56px;
+  text-align: right;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.1rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: #e8f5e9;
+  color: #2e7d32;
+  margin-right: 0.25rem;
+}
+
+.badge--off {
+  background: #f5f5f5;
+  color: #616161;
+}
+
+.badge--warn {
+  background: #fff8e1;
+  color: #8a6100;
+}
+
+@media (prefers-color-scheme: dark) {
+  .badge {
+    background: rgba(67, 160, 71, 0.2);
+    color: #c8e6c9;
+  }
+  .badge--off {
+    background: rgba(158, 158, 158, 0.2);
+    color: #e0e0e0;
+  }
+  .badge--warn {
+    background: rgba(249, 168, 37, 0.2);
+    color: #ffe08a;
+  }
+}
+
+.danger {
+  color: var(--mat-sys-error);
+}
+
+.danger mat-icon {
+  color: var(--mat-sys-error);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+/* Celular: cada usuario como tarjeta */
+@media (max-width: 700px) {
+  .users-table thead {
+    display: none;
+  }
+  .users-table,
+  .users-table tbody,
+  .users-table tr,
+  .users-table td {
+    display: block;
+    width: 100%;
+  }
+  .users-table tr {
+    position: relative;
+    padding: 0.6rem 0.9rem;
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+  }
+  .users-table tbody tr:last-child {
+    border-bottom: 0;
+  }
+  .users-table td {
+    border: 0;
+    padding: 0.15rem 3rem 0.15rem 0;
+    text-align: left;
+  }
+  .users-table td[data-label]:not(.username)::before {
+    content: attr(data-label) ': ';
+    color: var(--mat-sys-on-surface-variant);
+    font-size: 0.8rem;
+  }
+  .users-table td.actions-col {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: auto;
+    padding: 0;
+  }
+  .reset-banner {
+    flex-wrap: wrap;
+  }
+}
