@@ -21,6 +21,7 @@ export default class ChangePassword {
   private router = inject(Router);
   private snackBar = inject(MatSnackBar);
 
+  current = signal('');
   password = signal('');
   confirm = signal('');
   hide = signal(true);
@@ -29,10 +30,15 @@ export default class ChangePassword {
 
   username = computed(() => this.currentUser.user()?.username ?? '');
 
+  currentError = computed(() =>
+    this.current() ? null : 'Escribe tu contraseña actual (la que te dio soporte)',
+  );
+
   passwordError = computed(() => {
     const p = this.password();
     if (!p) return 'Escribe una contraseña';
     if (p.length < 6) return 'Debe tener al menos 6 caracteres';
+    if (p === this.current()) return 'Debe ser distinta a la actual';
     return null;
   });
 
@@ -42,11 +48,11 @@ export default class ChangePassword {
     return null;
   });
 
-  valid = computed(() => !this.passwordError() && !this.confirmError());
+  valid = computed(() => !this.currentError() && !this.passwordError() && !this.confirmError());
 
-  onInput(field: 'password' | 'confirm', event: Event) {
+  onInput(field: 'current' | 'password' | 'confirm', event: Event) {
     const value = (event.target as HTMLInputElement).value;
-    (field === 'password' ? this.password : this.confirm).set(value);
+    ({ current: this.current, password: this.password, confirm: this.confirm })[field].set(value);
   }
 
   save(event: SubmitEvent) {
@@ -55,7 +61,7 @@ export default class ChangePassword {
     if (!this.valid() || this.saving()) return;
 
     this.saving.set(true);
-    this.authService.changeOwnPassword(this.password()).subscribe({
+    this.authService.changeOwnPassword(this.current(), this.password()).subscribe({
       next: () => {
         this.saving.set(false);
         const user = this.currentUser.user();

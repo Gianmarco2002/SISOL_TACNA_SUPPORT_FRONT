@@ -76,8 +76,9 @@ export class AuthService {
       );
   }
 
-  changeOwnPassword(newPassword: string) {
+  changeOwnPassword(currentPassword: string, newPassword: string) {
     return this.http.patch<{ success: boolean }>(`${this.baseUrl}/me/password`, {
+      current_password: currentPassword,
       new_password: newPassword,
     });
   }
